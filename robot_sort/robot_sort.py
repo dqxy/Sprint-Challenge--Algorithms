@@ -96,8 +96,37 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # Setting item to none to verify nothing is being held at start
+        self.swap_item()
+        self.set_light_on()
+        # While a swap is made
+        while self.light_is_on():
+            # Turn light off to exit while loop
+            self.set_light_off()
+            # Check if the end of the list has been reached
+            while self.can_move_right():
+                # Move to the right of the list
+                self.move_right()
+                # Compare item in hand with item in front of robot
+                if self.compare_item() < 0:
+                    # Swap items to ensure robot holds larger item
+                    self.swap_item()
+                    # Verify the swap had been made
+                    self.set_light_on()
+            while self.compare_item() is not None:
+                # If the held item is bigger than item in front of robot
+                # Held item's value is greater
+                if self.compare_item() > 0:
+                    self.swap_item()
+                    # Verify that the swap was done
+                    self.set_light_on()
+                # Robot move to the left
+                self.move_left()
+            self.swap_item()
+            # If swaps were made
+            if self.light_is_on():
+                self.move_right()
+                self.swap_item()
 
 
 if __name__ == "__main__":
